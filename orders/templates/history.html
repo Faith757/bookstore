@@ -116,7 +116,7 @@
                 <tbody>
                     {% for order in orders %}
                     <tr>
-                        <td>{{order.date_ordered}}</td>
+                        <td>{{ order.date_ordered|date:"d M Y, h:i A" }}</td>
                         <td>{{order.total_amount}}</td>
                         <td>
                             {% if order.payment == 'pending' %}

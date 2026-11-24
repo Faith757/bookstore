@@ -1,0 +1,134 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f5f3ed;
+    padding: 20px;
+}
+
+.verify-container {
+    width: 100%;
+    max-width: 420px;
+    background: white;
+    padding: 40px 35px;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+.icon {
+    width: 65px;
+    height: 65px;
+    background: #e8f1ec;
+    color: #245b45;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    margin: 0 auto 20px;
+}
+
+.logo {
+    color: black;
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.logo span{
+    color:#c58b45;
+}
+
+h2 {
+    color: #222;
+    margin-bottom: 12px;
+}
+
+.description {
+    color: #777;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    outline: none;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 10px;
+}
+
+input[type="text"]:focus {
+    border-color: #245b45;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: #245b45;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #194331;
+}
+
+.messages {
+    margin-bottom: 15px;
+    padding: 12px;
+    background: #fff4df;
+    color: #805b16;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 25px;
+    color: #c58b45;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .verify-container {
+        padding: 30px 22px;
+    }
+}

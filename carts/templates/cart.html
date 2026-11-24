@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookNest | My Shopping Cart</title>
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+</head>
+
+<body>
+
+<section class="cart-section">
+
+    <div class="cart-header">
+        <div>
+            <h1>My Shopping Cart</h1>
+            <p>Review your selected books before checkout.</p>
+        </div>
+        <div class="order">
+            <a href="/books/book" class="continue-shopping">
+                Continue Shopping
+            </a>
+            <a href="/orders/history" class="continue-shopping">
+                View Order History
+            </a>
+        </div>
+    </div>
+
+    <div class="cart-container">
+
+        <div class="cart-table-wrapper">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Book</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for cart in carts %}
+                    <tr>
+                        <td>
+                            <div class="book-info">
+                                <div class="book-icon">📚</div>
+                                <span>{{ cart.book.title }}</span>
+                            </div>
+                        </td>
+
+                        <td>₦{{ cart.book.price }}</td>
+
+                        <td>
+                            {{ cart.quantity }}
+                        </td>
+
+                        <td class="subtotal">
+                            ₦{{ cart.subtotal }}
+                        </td>
+
+                        <td>
+                            <form method="POST"
+                                  action="{% url 'remove_from_cart' cart.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="remove-btn">
+                                    Remove
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="empty-cart">
+                            <div class="empty-icon">🛒</div>
+                            <h3>Your cart is empty</h3>
+                            <p>You haven't added any books to your cart yet.</p>
+
+                            <a href="/books/book">
+                                Browse Books
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+
+        {% if carts %}
+        <div class="cart-summary">
+
+            <h2>Order Summary</h2>
+
+            <div class="summary-row">
+                <span>Total Items</span>
+                <span>{{ carts|length }}</span>
+            </div>
+
+            <div class="summary-row total">
+                <span>Total Amount</span>
+                <span>₦{{ total }}</span>
+            </div>
+            <form method="POST" action="{% url 'checkout' %}">
+                    {% csrf_token %}
+                    <button id="btn">
+                        Proceed to Checkout
+                    </button>
+            </form>
+
+        </div>
+        {% endif %}
+
+    </div>
+
+</section>
+
+<footer>
+    <h2>Book<span>Nest.</span></h2>
+    <p>Your favourite place to discover amazing books.</p>
+    <p class="copyright">© 2026 BookNest. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

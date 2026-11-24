@@ -1,0 +1,230 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookNest | Checkout</title>
+    <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+</head>
+
+<body>
+
+    <div class="checkout-container">
+
+        <div class="checkout-header">
+            <h1>Checkout</h1>
+            <p>Review your details and order before proceeding.</p>
+        </div>
+
+        <div class="checkout-grid">
+
+            <!-- CUSTOMER AND BANK DETAILS -->
+
+            <div>
+
+                <div class="checkout-card">
+
+                    <h2>Customer Information</h2>
+
+                    <div class="customer-detail">
+                        <label>Full Name</label>
+                        <p>
+                            {{ request.user.first_name }}
+                            {{ request.user.last_name }}
+                        </p>
+                    </div>
+
+                    <div class="customer-detail">
+                        <label>Email Address</label>
+                        <p>{{ request.user.email }}</p>
+                    </div>
+
+                    {% if profile %}
+
+                        <div class="customer-detail">
+                            <label>Phone Number</label>
+                            <p>{{ profile.phone }}</p>
+                        </div>
+
+                        <div class="customer-detail">
+                            <label>Address</label>
+                            <p>{{ profile.address }}</p>
+                        </div>
+
+                    {% else %}
+
+                        <p>Please complete your profile information.</p>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- BANK DETAILS -->
+
+                <div class="checkout-card">
+
+                    <h2>Bank Transfer Details</h2>
+
+                    <div class="bank-details">
+
+                        <div class="bank-row">
+                            <span>Bank Name</span>
+                            <strong>{{ bank_name }}</strong>
+                        </div>
+
+                        <div class="bank-row">
+                            <span>Account Name</span>
+                            <strong>{{ account_name }}</strong>
+                        </div>
+
+                        <div class="bank-row">
+                            <span>Account Number</span>
+                            <strong>{{ account_number }}</strong>
+                        </div>
+
+                    </div>
+
+                    <div class="payment-note">
+                        Please transfer the exact amount shown in your
+                        order summary to the account details above.
+                        Your payment will be verified by the admin
+                        before your order is processed.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ORDER SUMMARY -->
+
+            <div>
+
+                <div class="checkout-card">
+
+                    <h2>Order Summary</h2>
+
+                    {% for item in cart_items %}
+
+                        <div class="order-item">
+
+                            <div>
+                                <h3>{{ item.book.title }}</h3>
+
+                                <p>Quantity: {{ item.quantity }}</p>
+
+                                <p>
+                                    Unit Price:
+                                    ₦{{ item.book.price }}
+                                </p>
+                            </div>
+
+                            <div class="item-price">
+                                ₦{{ item.subtotal }}
+                            </div>
+
+                        </div>
+
+                    {% empty %}
+
+                        <p>Your cart is empty.</p>
+
+                    {% endfor %}
+
+                    <div class="total-section">
+                        <span>Total Amount</span>
+
+                        <strong>
+                            ₦{{ total }}
+                        </strong>
+                    </div>
+                    
+                    {% if order %}
+                    <div class="status">
+                        <p>Payment Status:
+                            {% if order.payment == 'pending' %}
+                                <span class="pending">{{ order.payment }}</span>
+                            {% elif order.payment == 'paid' %}
+                                <span class="approved">{{ order.payment }}</span>
+                            {% elif order.payment == 'reversed' %}
+                                <span class="rejected">{{ order.payment }}</span>
+                            {% endif %}
+                        </p>
+
+                        <p>Shipping Status:
+                            {% if order.status == 'pending' %}
+                                <span class="pending">{{ order.status }}</span>
+                            {% elif order.status == 'processing' %}
+                                <span class="pending">{{ order.status }}</span>
+                            {% elif order.status == 'shipped' %}
+                                <span class="shipped">{{ order.status }}</span>
+                            {% elif order.status == 'delivered' %}
+                                <span class="approved">{{ order.status }}</span>
+                            {% elif order.status == 'cancelled' %}
+                                <span class="rejected">{{ order.status }}</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                    {% endif %}
+
+                    {% for message in messages %}
+                        <p class="message {{ message.tags }}">{{message}}</p>
+                    {% endfor %}
+                    
+                    {% if order and order.payment_receipt %}
+                    <div class="receiptbox">
+                        <p><strong>Your Uploaded Receipt</strong></p>
+
+                        <img src="{{ order.payment_receipt.url }}"
+                            alt="payment_receipt"
+                            style="max-width: 100%; border-radius: 10px; margin: 10px 0; height: 200px;">
+                    </div>
+                    {% endif %}
+
+                    {% if not order or order.payment != 'paid' %}
+                    <form method="POST"
+                        {% if order %}
+                            action="{% url 'payment_order' order.id %}"
+                        {% else %}
+                            action="{% url 'payment' %}"
+                        {% endif %}
+                        enctype="multipart/form-data">
+
+                        {% csrf_token %}
+
+                        <label for="payment_receipt">
+                            <strong>Choose your receipt (JPEG, PNG, WEBP, max 5MB)</strong>
+                        </label>
+
+                        <input type="file"
+                            id="payment_receipt"
+                            name="payment_receipt"
+                            accept="image/jpeg,image/png,image/webp"
+                            required>
+
+                        <button type="submit" class="checkout-btn">
+                            Upload Proof of Payment
+                        </button>
+                    </form>
+                    {% endif %}
+
+                    <div class="back-link">
+                        <a href="/carts/cart">Back to cart</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <footer>
+        <h2>Book<span>Nest.</span></h2>
+        <p>Your favourite place to discover amazing books.</p>
+        <p class="copyright">© 2026 BookNest. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

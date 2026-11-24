@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookNest | Login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <div class="logo">Book<span>Nest.</span></div>
+        <p class="subtitle">Your world of books awaits</p>
+
+        <h2>Welcome Back!</h2>
+
+        <p class="description">
+            Enter your registered email address to receive
+            a login verification code.
+        </p>
+
+        {% for message in messages %}
+            <div class="messages">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_email">Email Address</label>
+                {{ form.email }}
+            </div>
+
+            <button type="submit">
+                Send Login Code
+            </button>
+
+        </form>
+
+        <div class="register">
+            Don't have an account?
+            <a href="/accounts/register">Register</a>
+        </div>
+
+        <a href="/accounts/homepage" class="back-link">back to homepage</a>
+
+    </div>
+
+</body>
+</html>

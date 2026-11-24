@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookNest | Verify OTP</title>
+    <link rel="stylesheet" href="{% static 'css/verifyOTP.css' %}">
+</head>
+
+<body>
+
+    <div class="verify-container">
+
+        <div class="logo">Book<span>Nest.</span></div>
+
+        <div class="icon">✉</div>
+
+        <h2>Verify Your Email</h2>
+
+        <p class="description">
+            We've sent a 6-digit verification code to your
+            email address. Enter the code below to access
+            your bookstore account.
+        </p>
+
+        {% for message in messages %}
+            <div class="messages">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_otp">Verification Code</label>
+                 {{ form.otp }}
+            </div>
+
+            <button type="submit">
+                Verify & Login
+            </button>
+
+        </form>
+
+        <a href="/accounts/login" class="back-link">
+            ← Back to Login
+        </a>
+
+    </div>
+
+</body>
+</html>

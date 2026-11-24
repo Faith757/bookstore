@@ -1,0 +1,286 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+html, body {
+    min-height: 100%;
+}
+
+body {
+    background: #f8f6f1;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.checkout-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+    flex: 1;
+    width: 100%;
+}
+
+.checkout-header {
+    margin-bottom: 30px;
+}
+
+.checkout-header h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.checkout-header p {
+    color: #777;
+    font-size: 14px;
+}
+
+.checkout-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    align-items: start;
+}
+
+.checkout-card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+    margin-bottom: 25px;
+}
+
+.checkout-card h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.customer-detail {
+    margin-bottom: 18px;
+}
+
+.customer-detail label {
+    display: block;
+    color: #888;
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.customer-detail p {
+    font-size: 15px;
+    overflow-wrap: anywhere;
+}
+
+.bank-details {
+    background: white;
+    border: 1px solid #dce9df;
+    border-radius: 8px;
+    padding: 18px;
+}
+
+.bank-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid #dce9df;
+}
+
+.bank-row:last-child {
+    border-bottom: none;
+}
+
+.bank-row span {
+    color: #777;
+    font-size: 14px;
+}
+
+.bank-row strong {
+    font-size: 14px;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.payment-note {
+    background: #fff8e8;
+    border-left: 4px solid #e5a000;
+    padding: 14px;
+    margin-top: 18px;
+    border-radius: 5px;
+    color: #795b17;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.order-item h3 {
+    font-size: 15px;
+    margin-bottom: 7px;
+}
+
+.order-item p {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 5px;
+}
+
+.item-price {
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.total-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin-top: 15px;
+}
+
+.total-section span {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.total-section strong {
+    font-size: 21px;
+    color: #176b45;
+}
+
+.status p{
+    margin-bottom: 20px;
+}
+
+.pending {
+    background: lightyellow;
+    padding: 6px 12px;
+    border-radius: 20px;
+    color: goldenrod;
+}
+
+.approved {
+    background: rgba(0, 255, 0, 0.1);
+    color: darkgreen;
+    padding: 6px 12px;
+    border-radius: 20px;
+}
+
+.shipped {
+    background: rgba(0, 0, 255, 0.1);
+    padding: 6px 12px;
+    border-radius: 20px;
+    color: darkblue;
+}
+
+.rejected {
+    background: rgba(255, 0, 0, 0.1);
+    color: darkred;
+    padding: 6px 12px;
+    border-radius: 20px;
+}
+
+.message {
+    padding: 7px 14px;
+    border-radius: 5px;
+    font-size: 12px;
+    margin: 15px;
+    text-align: center;
+}
+
+.message.success{
+    background-color: rgba(0, 255, 0, 0.1);
+    color: darkgreen;
+    border: 1px solid darkgreen;
+}
+
+.message.error{
+    background-color: rgba(255, 0, 0, 0.1);
+    color: darkred;
+    border: 1px solid darkred;
+}
+
+.checkout-btn {
+    width: 100%;
+    padding: 15px;
+    background: #172820;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.checkout-btn:hover {
+    background: #c58b45;
+}
+
+.back-link a {
+    display: block;
+    text-align: center;
+    margin-top: 18px;
+    color: #176b45;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.back-link a:hover{
+    color: #c58b45;
+}
+
+footer {
+    background: #172820;
+    color: white;
+    text-align: center;
+    padding: 35px 20px;
+}
+
+footer h2 {
+    margin-bottom: 12px;
+}
+
+footer h2 span {
+    color: #c58b45;
+}
+
+footer p {
+    color: #ccc;
+    margin-bottom: 15px;
+}
+
+.copyright {
+    border-top: 1px solid #45564c;
+    padding-top: 20px;
+    margin-bottom: 0;
+    font-size: 13px;
+}
+
+@media (max-width: 750px) {
+    .checkout-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .checkout-container {
+        padding: 12px;
+        margin: 20px auto;
+    }
+
+    .checkout-card {
+        padding: 18px;
+    }
+}

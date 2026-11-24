@@ -1,0 +1,170 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookNest | Book List</title>
+    <link rel="stylesheet" href="{% static 'css/booklist.css' %}">
+</head>
+<body>
+
+    <header>
+        <nav class="media-nav">
+            <div class="header1">
+                <h2 class="logo">Book<span>Nest.</span></h2>
+                <div class="account-menu">
+        
+                    <button type="button" class="profile-button">
+                        <span class="profile-initials">
+                            {% if request.user.first_name or request.user.last_name %}
+                                {{ request.user.first_name|first|upper }}{{ request.user.last_name|first|upper }}
+                            {% else %}
+                                {{ request.user.username|first|upper }}
+                            {% endif %}
+                        </span>
+                    </button>
+            
+                    <div class="profile-dropdown">
+            
+                        <div class="profile-info">
+                            <strong>
+                                {{ request.user.first_name }} {{ request.user.last_name }}
+                            </strong>
+            
+                            <small>{{ request.user.email }}</small>
+                        </div>
+            
+                        <hr>
+            
+                        <a href="{% url 'edit-profile' %}">Edit Profile</a>
+                        <a href="{% url 'logout' %}">Logout</a>
+            
+                    </div>
+            
+                </div>
+            </div>
+            <ul class="nav-links" id="navlink">
+                <li><a href="/books/book" class="active">Books</a></li>
+                <li><a href="/bookrequests/my-request">My Request</a></li>
+                <li><a href="/bookrequests/request-form">Request Book</a></li>
+                <li><a href="/carts/cart">Cart</a></li>
+            </ul>
+
+        </nav>
+
+        <nav class="navbar">
+
+            <h2 class="logo">Book<span>Nest.</span></h2>
+        
+            <ul class="nav-links">
+                <li><a href="/books/book" class="active">Books</a></li>
+                <li><a href="/bookrequests/my-request">My Request</a></li>
+                <li><a href="/bookrequests/request-form">Request Book</a></li>
+                <li><a href="/carts/cart">Cart</a></li>
+            </ul>
+        
+            <div class="account-menu">
+        
+                <button type="button" class="profile-button">
+                    <span class="profile-initials">
+                        {% if request.user.first_name or request.user.last_name %}
+                            {{ request.user.first_name|first|upper }}{{ request.user.last_name|first|upper }}
+                        {% else %}
+                            {{ request.user.username|first|upper }}
+                        {% endif %}
+                    </span>
+                </button>
+        
+                <div class="profile-dropdown">
+        
+                    <div class="profile-info">
+                        <strong>
+                            {{ request.user.first_name }} {{ request.user.last_name }}
+                        </strong>
+        
+                        <small>{{ request.user.email }}</small>
+                    </div>
+        
+                    <hr>
+        
+                    <a href="{% url 'edit-profile' %}">Edit Profile</a>
+                    <a href="{% url 'logout' %}">Logout</a>
+        
+                </div>
+        
+            </div>
+        
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-heading">
+            <h1>Available Books</h1>
+            <p>Explore our collection and check book availability.</p>
+        </section>
+
+        <section class="table-section">
+
+            <div class="table-header">
+                <div>
+                    <h2>Book Collection</h2>
+                    <p>View all books available in our bookshop.</p>
+                </div>
+
+                <form action="{% url 'booklist' %}" method="get">
+                    <div class="search-box">
+                      <input type="text" name="search" placeholder="Search books..." value="{{ query }}">
+                      <button type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Book Title</th>
+                            <th>Author</th>
+                            <th>Category</th>
+                            <th>ISBN</th>
+                            <th>Price</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                  
+                    <tbody>
+                        {% for book in books %}
+                        <tr>
+                            <td>{{book.title}}</td>
+                            <td>{{book.author}}</td>
+                            <td>{{book.category}}</td>
+                            <td>{{book.isbn}}</td>
+                            <td>{{book.price}}</td>
+                            <td>
+                                <form method="POST"
+                                      action="{% url 'add_to_cart' book.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" id="btn">
+                                        +Add to cart
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+    </main>
+    
+    <footer>
+        <h2>Book<span>Nest.</span></h2>
+        <p>Your favourite place to discover amazing books.</p>
+        <p class="copyright">© 2026 BookNest. All Rights Reserved.</p>
+    </footer>
+
+    <script></script>
+</body>
+</html>

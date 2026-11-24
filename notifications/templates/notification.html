@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookNest | Notifications</title>
+    <link rel="stylesheet" href="{% static 'css/notification.css' %}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h2>Notifications</h2>
+
+        <span class="count">
+            {{ unread_count }} Unread
+        </span>
+    </div>
+
+    {% for notification in notifications %}
+
+        <div class="notification {% if not notification.is_read %}unread{% endif %}">
+
+            <div>
+                <p>{{ notification.message }}</p>
+
+                <small>
+                    {{ notification.date_created|date:"M d, Y - h:i A" }}
+                </small>
+
+                <br><br>
+
+                {% if notification.is_read %}
+                    <span class="read-label">Read</span>
+                {% else %}
+                    <span style="color: #2563eb; font-size: 13px;">
+                        Unread
+                    </span>
+                {% endif %}
+            </div>
+
+            {% if not notification.is_read %}
+                <form method="POST"
+                      action="{% url 'read' notification.id %}">
+
+                    {% csrf_token %}
+
+                    <button type="submit" class="mark-btn">
+                        Mark as Read
+                    </button>
+
+                </form>
+            {% endif %}
+
+        </div>
+
+    {% empty %}
+
+        <div class="empty">
+            <h3>No Notifications Yet</h3>
+            <p>You don't have any notifications at the moment.</p>
+        </div>
+
+    {% endfor %}
+
+    <a href="/bookrequests/my-request" class="back-link">Back to request</a>
+
+</div>
+
+</body>
+</html>
